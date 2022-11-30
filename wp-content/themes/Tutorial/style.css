@@ -1,0 +1,92 @@
+/* https: //codex.wordpress.org/Theme_Development */
+
+/*
+Theme Name: Tutorial
+Theme URI: http://www.cfta.it/
+Author: Corso cfta
+Author URI: http://www.cfta.it/
+Description: Tema elearning
+Text Domain: Tutorial
+Version: 1.0
+
+--------optional below--------
+
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: black, brown, orange, tan, white, yellow, light, one-column, two-columns, right-sidebar, flexible-width, custom-header, custom-menu, editor-style, featured-images, microformats, post-formats, rtl-language-support, sticky-post, translation-ready
+Text Domain: twentythirteen
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+.entry {
+    color: green !important;
+}
+
+.title {
+    color: green !important;
+}
+
+.contatti {
+    margin-left: -100px !important;
+    width: 300px;
+}
+
+/*creazione del menu*/
+
+/* menu-main-menu-container */
+@media screen and (max-width: 992px) {
+    .menu-main-menu-container ul li {
+        float: none !important;
+        background-color: transparent !important;
+        text-align: left !important;
+        list-style: none;
+    }
+
+    .menu-main-menu-container ul li a {
+        text-decoration: none;
+        margin-top: 5px !important;
+        color: black !important;
+    }
+}
+
+
+
+.menu-main-menu-container>ul>li {
+    float: left;
+    margin: 10px;
+    background-color: #009eee;
+    width: 120px;
+    height: 60px;
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    border-radius: 20px;
+    list-style: none;
+
+}
+
+.menu-main-menu-container ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+
+/*istruzione per pulire float*/
+
+.clear {
+    clear: both;
+}
+
+
+/*hover cioè al passaggio del mouse*/
+.menu-main-menu-container li a:hover {
+    color: yellow;
+}
+
+.menu-main-menu-container li:hover {
+    background-color: red;
+    transition: all 0.5s ease;
+}
