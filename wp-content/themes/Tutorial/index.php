@@ -83,15 +83,39 @@
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-4">
+            <!-- inizio loop: WP_Query -->
+            <?php
+            // La Query
+$the_query = new WP_Query( 'category_name=servizi' );
+
+    // Il Loop
+    while ($the_query->have_posts()) :
+        $the_query->the_post();
+
+
+        ?>
+         
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
+                        <!-- per fa-graduation-cap usero' un campo personalizzato  dell'articolo: get_post_meta -->
                             <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
+                            <!-- sostituisco Skilled Instructors con una istruzione che chiama il titolo dell'articolo: the_title -->
                             <h5 class="mb-3">Skilled Instructors</h5>
+                              <!-- sostituisco contenuto con una istruzione che lo richiama: the_content -->
                             <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
                         </div>
                     </div>
                 </div>
+                <?php
+    endwhile;
+
+    // Ripristina Query & Post Data originali
+    wp_reset_query();
+    wp_reset_postdata();
+
+    ?>
+                <!-- fine loop Wp_Query -->
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
@@ -438,7 +462,7 @@
                     </div>
                 </div>
                 <div class="testimonial-item text-center">
-                    <img class="border rounded-circle p-2 mx-auto mb-3" src="img/testimonial-4.jpg')?>" style="width: 80px; height: 80px;">
+                    <img class="border rounded-circle p-2 mx-auto mb-3" src="<?php echo get_theme_file_uri('img/testimonial-4.jpg')?>" style="width: 80px; height: 80px;">
                     <h5 class="mb-0">Client Name</h5>
                     <p>Profession</p>
                     <div class="testimonial-text bg-light text-center p-4">

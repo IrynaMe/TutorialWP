@@ -34,3 +34,5 @@ function aggiungi_style()
 }
 
 add_action('wp_enqueue_scripts', 'aggiungi_style');
+
+?>
