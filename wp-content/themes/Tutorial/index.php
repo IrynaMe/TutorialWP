@@ -91,20 +91,27 @@ $the_query = new WP_Query( 'category_name=servizi' );
     // Il Loop
     while ($the_query->have_posts()) :
         $the_query->the_post();
-
-
         ?>
-         
+
+
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                         <!-- per fa-graduation-cap usero' un campo personalizzato  dell'articolo: get_post_meta -->
-                            <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
+                        <i  class="fa fa-3x <?php echo get_post_meta(get_the_ID(),'icona',true);?>  text-primary mb-4" style="font-size:30px; !important"></i>
+                        
                             <!-- sostituisco Skilled Instructors con una istruzione che chiama il titolo dell'articolo: the_title -->
-                            <h5 class="mb-3">Skilled Instructors</h5>
+                            <h5 class="mb-3"><a href="<?php the_permalink() ?>" rel="bookmark" title="Link permanente a <?php the_title_attribute(); ?>" style="color:black;"><?php the_title(); ?></a></h5>
                               <!-- sostituisco contenuto con una istruzione che lo richiama: the_content -->
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
+                                  <p>
+                                    <!-- <?php echo get_post_meta(get_the_id(), 'servizi', true) ?> -->
+                                     <?php echo the_excerpt(); ?>
+                                </p>
+                                   
+                              <!-- <div class="entry "> -->
+                                
+                              <!-- </div> -->
+                            </div>
                     </div>
                 </div>
                 <?php
@@ -116,7 +123,7 @@ $the_query = new WP_Query( 'category_name=servizi' );
 
     ?>
                 <!-- fine loop Wp_Query -->
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+<!--                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-globe text-primary mb-4"></i>
@@ -142,7 +149,7 @@ $the_query = new WP_Query( 'category_name=servizi' );
                             <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
