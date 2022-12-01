@@ -1,5 +1,11 @@
 
+<!-- https://github.com/AlexWebLab/bootstrap-5-wordpress-navbar-walker -->
 
+<!-- to CREATE MENU wordpress (changeable from backent) there are 3 steps:
+1 register it in functions.php ---this will show in 'appearence' item 'menu' 
+2 created menu in backend and in DB
+3 visualize menu in frontend, having modified file menu.php
+-->
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
         <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
