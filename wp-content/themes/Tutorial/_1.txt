@@ -1,0 +1,134 @@
+1 create folder -viaggi
+2 create files: 
+    -index.php
+    -functions.php
+    -screenshot.png
+    -style.css
+3 write comments in style.css
+    -name: Viaggi
+    -theme domain: Viaggi
+4 WP admin panel: appearance>themes> activate
+5 index.html transform in index.php
+6 content of style.css copy in style.css
+7 img copy in img
+8 create header.php and cut-paste part if index with header into header
+    before </head> put  <?php wp_head()?>
+9 create footer.php and cut-paste part if index with footer into header
+    after </body> <?php wp_head()?>
+10 in index.php
+    -in the beginning before content <?php get_header()?>
+    -in the end after content <?php get_footer()?>
+11 in header.php fix links - write them in functions.php
+    function fogli_stile(){
+        ...links..
+    }
+   add_action('wp_enqueue_scripts', 'fogli_stile');
+  
+ 
+12 in index.php, header.php, footer.php check and modify image src links 
+    -example: 
+    src="<?php echo get_theme_file_uri('img/cat-1.jpg')?>" 
+13 create folder 'includes' and create inside it menu.php
+14 from index.php cut-paste part with menu in menu.php 
+15  in index.php instead of menu write <?php get_tempalte_part('includes/menu)?>
+16 in functions.php to visualize featured images:
+      add_theme_support( 'post-thumbnails' );
+16 create posts in wp admin panel
+    -posts >new post
+        -title
+        -featured image
+        -caegory/custom fields...
+
+
+17 to visualize posts in index.php
+-------------------------------------------------------------
+|                    2 types of loop                        |
+|                                                           |
+-------------------------------------------------------------
+            
+         -------------------------------------------
+         |     (A) generic loop (Select All)       |
+         ------------------------------------------- 
+    
+https://codex.wordpress.org/Il_Loop     
+example:
+
+<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+<div class="col-4 my-3">
+<?php the_post_thumbnail();?>
+</div>
+
+
+<div class="col-8 my-3">
+<h2 class="title"><a href="<?php the_permalink() ?>" rel="bookmark" title="Link permanente a <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+
+ <div class="entry ">
+   <?php 
+   //the_content(); 
+   the_excerpt();
+   ?>
+   <?php echo get_post_meta(get_the_id(), 'specializzato', true) ?>
+ </div>
+</div>
+
+
+<?php endwhile; else: ?>
+<p> <?php _e('Nessun articolo corrisponde ai criteri di ricerca.'); ?></p>
+<?php endif; ?>
+         
+
+
+
+         ----------------------------------------------
+         |           (B) 'specialized' loop           |
+         |   using class WP_Query (Select all WHERE)  |
+         ---------------------------------------------- 
+
+https://developer.wordpress.org/reference/classes/wp_query/
+example: 
+
+
+<!-- inizio loop: WP_Query -->
+<?php
+// La Query
+$the_query = new WP_Query( 'category_name=servizi' );
+
+// Il Loop
+while ($the_query->have_posts()) :
+    $the_query->the_post(); 
+?>
+
+<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+<div class="service-item text-center pt-3">
+<div class="p-4">
+<!-- per fa-graduation-cap usero' un campo personalizzato  dell'articolo: get_post_meta -->
+<i  class="fa fa-3x <?php echo get_post_meta(get_the_ID(),'icona',true);?>  text-primary mb-4" style="font-size:30px; !important"></i>
+                        
+<!-- sostituisco Skilled Instructors con una istruzione che chiama il titolo dell'articolo: the_title -->
+<h5 class="mb-3"><a href="<?php the_permalink() ?>" rel="bookmark" title="Link permanente a <?php the_title_attribute(); ?>" style="color:black;"><?php the_title(); ?></a></h5>
+<!-- sostituisco contenuto con una istruzione che lo richiama: the_content -->
+<p>
+<!-- <?php echo get_post_meta(get_the_id(), 'servizi', true) ?> -->
+<?php echo the_excerpt(); ?>
+</p>
+                                   
+<!-- <div class="entry "> -->
+                                
+<!-- </div> -->
+</div>
+</div>
+</div>
+<?php
+endwhile;
+
+// Ripristina Query & Post Data originali
+wp_reset_query();
+wp_reset_postdata();
+
+?>
+<!------- fine loop Wp_Query ----->
+
+
+
+
+18 

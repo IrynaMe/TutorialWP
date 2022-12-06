@@ -37,6 +37,7 @@ define( 'DB_CHARSET', 'utf8mb4' );
 /** The database collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
 
+
 /**#@+
  * Authentication unique keys and salts.
  *
@@ -57,6 +58,10 @@ define( 'SECURE_AUTH_SALT', ';r~oIH@&O5T6O+|&Sa#. Z-dfgv$hJ$ p$Ei0@f}`ttNK0<wZ8e
 define( 'LOGGED_IN_SALT',   'lk]/tS^}e%Fuw+.{UC[IM76m.#mGLcQ;>*}0OwL6wl97maP.6qWg)aGPH%O-}@g.' );
 define( 'NONCE_SALT',       'rCMuiI7T p1=hUk*&{1TV=5Qtyi8==Y77.xt@+0da,m5lW> eHBaqPnVFohxMmLv' );
 
+
+	
+define( 'DISALLOW_FILE_EDIT', true);
+define( 'AUTOMATIC_UPDATER_DISABLED', true);
 /**#@-*/
 
 /**

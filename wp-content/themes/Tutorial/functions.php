@@ -36,90 +36,122 @@ function aggiungi_style()
 add_action('wp_enqueue_scripts', 'aggiungi_style');
 
 
-// bootstrap 5 wp_nav_menu walker
-class bootstrap_5_wp_nav_menu_walker extends Walker_Nav_menu
-{
-  private $current_item;
-  private $dropdown_menu_alignment_values = [
-    'dropdown-menu-start',
-    'dropdown-menu-end',
-    'dropdown-menu-sm-start',
-    'dropdown-menu-sm-end',
-    'dropdown-menu-md-start',
-    'dropdown-menu-md-end',
-    'dropdown-menu-lg-start',
-    'dropdown-menu-lg-end',
-    'dropdown-menu-xl-start',
-    'dropdown-menu-xl-end',
-    'dropdown-menu-xxl-start',
-    'dropdown-menu-xxl-end'
-  ];
+/* 
+to CREATE MENU wordpress (changeable from backent) there are 3 steps:
+1 register it in functions.php ---this will show in 'appearence' item 'menu' 
+2 created menu in backend and in DB
+3 visualize menu in frontend, having modified file menu.php
 
-  function start_lvl(&$output, $depth = 0, $args = null)
-  {
-    $dropdown_menu_class[] = '';
-    foreach($this->current_item->classes as $class) {
-      if(in_array($class, $this->dropdown_menu_alignment_values)) {
-        $dropdown_menu_class[] = $class;
-      }
-    }
-    $indent = str_repeat("\t", $depth);
-    $submenu = ($depth > 0) ? ' sub-menu' : '';
-    $output .= "\n$indent<ul class=\"dropdown-menu$submenu " . esc_attr(implode(" ",$dropdown_menu_class)) . " depth_$depth\">\n";
-  }
+https://github.com/AlexWebLab/bootstrap-5-wordpress-navbar-walker 
+ */
 
-  function start_el(&$output, $item, $depth = 0, $args = null, $id = 0)
-  {
-    $this->current_item = $item;
 
-    $indent = ($depth) ? str_repeat("\t", $depth) : '';
+require_once('walker.php');
 
-    $li_attributes = '';
-    $class_names = $value = '';
+/* to create  a CUSTOM POST TYPE- steps:
+1 register it with function register_post_type 
+2 create it in backend
+3 visualize with wp_query
+ */
 
-    $classes = empty($item->classes) ? array() : (array) $item->classes;
+function corsiFormazione(){
+  $labels=array(
+'name'=>'corsi',
+'singular_name'=>'corso',
+'menu_name'=>'Catalogo Corsi',
+'add_new'=>'Aggiungi Nuovo Corso',
+'all_items'=>'Tutti Corsi',
+'new_item'=>'Nuovo Corso',
+'view_item'=>'Visualizza',
+'search'=>'Ricerca',
 
-    $classes[] = ($args->walker->has_children) ? 'dropdown' : '';
-    $classes[] = 'nav-item';
-    $classes[] = 'nav-item-' . $item->ID;
-    if ($depth && $args->walker->has_children) {
-      $classes[] = 'dropdown-menu dropdown-menu-end';
-    }
-
-    $class_names =  join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $item, $args));
-    $class_names = ' class="' . esc_attr($class_names) . '"';
-
-    $id = apply_filters('nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args);
-    $id = strlen($id) ? ' id="' . esc_attr($id) . '"' : '';
-
-    $output .= $indent . '<li ' . $id . $value . $class_names . $li_attributes . '>';
-
-    $attributes = !empty($item->attr_title) ? ' title="' . esc_attr($item->attr_title) . '"' : '';
-    $attributes .= !empty($item->target) ? ' target="' . esc_attr($item->target) . '"' : '';
-    $attributes .= !empty($item->xfn) ? ' rel="' . esc_attr($item->xfn) . '"' : '';
-    $attributes .= !empty($item->url) ? ' href="' . esc_attr($item->url) . '"' : '';
-
-    $active_class = ($item->current || $item->current_item_ancestor || in_array("current_page_parent", $item->classes, true) || in_array("current-post-ancestor", $item->classes, true)) ? 'active' : '';
-    $nav_link_class = ( $depth > 0 ) ? 'dropdown-item ' : 'nav-link ';
-    $attributes .= ( $args->walker->has_children ) ? ' class="'. $nav_link_class . $active_class . ' dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"' : ' class="'. $nav_link_class . $active_class . '"';
-
-    $item_output = $args->before;
-    $item_output .= '<a' . $attributes . '>';
-    $item_output .= $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $args->link_after;
-    $item_output .= '</a>';
-    $item_output .= $args->after;
-
-    $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
-  }
+  );
+  $args= array(
+    'labels'=> $labels,
+    'public'=> true,
+    'show_ui'=> true,
+    'labels'=> $labels,
+    'publicaly_queryable'=>true,
+    'query_var'=>true,
+    'rewrite'=>array('slug'=>'corsi'),
+    'capability_type'=>'post',
+    'hierarchical'=>true,
+    'supports'=>array(
+      'title',
+      'editor',
+      'excerpt',
+      'custom-fields',
+      'thumbnail',
+      'page-attributes',
+    ),
+    'taxonomies'=>array(
+      'category',
+      'post_tag',
+      'autore_corso',
+    ),
+    'menu_position'=>5,
+    'menu_icon'=>'dashicons-portfolio',
+    'exclude_form_search'=>false,
+    'show_in_rest'=>true //activate guttenberg
+  );
+  register_post_type('corsi', $args);
 }
-// register a new menu
-register_nav_menu('main-menu', 'Main menu');
+add_action('init', 'corsiFormazione'); 
+
+// CUSTOMIZE LOGO
+//https://www.html.it/pag/57001/il-theme-customizer-di-wordpress/
+
+function Customizza_logo($wp_customize)
+{
+    //CREARE UNA NUOVA SEZIONE NEL MENU PERSONALIZZA
+    $wp_customize->add_section(
+        'brand',
+        array(
+        'title'=> __('Immagine e Titolo del sito', 'brand'),
+        'priority'=>30,
+        )
+    );
+
+    //IMMAGINE.............................
+    $wp_customize->add_setting(
+        'logo_brand_settaggio',
+        array(
+        'default'=>'',
+        'transport'=>'refresh',
+
+        )
+    );
+    $wp_customize->add_control(new WP_Customize_Image_Control(
+        $wp_customize,
+        'logo_brand_label',
+        array(
+        'label'=>__('carica la tua immgine', 'logo_brand_control'),
+        'section'=>'brand',
+        'settings'=>'logo_brand_settaggio'
 
 
+        )
+    ));
+    //TESTO............................
+    $wp_customize->add_setting(
+        'nome_brand_settaggio',
+        array(
+        'default'=>'Elearing',
+        'transport'=>'refresh',
+        )
+    );
 
-
-
-
-
+    $wp_customize->add_control(new WP_Customize_Control(
+        $wp_customize,
+        'nome_brand_label',
+        array(
+            'label'=>__('Il titolo del sito', 'nome_brand_control'),
+            'section'=>'brand',
+            'settings'=>'nome_brand_settaggio',
+            'type'=>'text'
+        )
+    ));
+}
+add_action('customize_register', 'Customizza_logo');
 
 ?>
