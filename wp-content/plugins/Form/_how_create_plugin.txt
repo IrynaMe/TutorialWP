@@ -1,0 +1,50 @@
+
+----------the goal is:--------------
+-fill the form in footer.php which name is Newsletter:'sign up'
+-insert in the table DB data inserted in form
+-insert in the audience mailchimp 
+
+--------Procedure in php:------------
+( use classes, object, object->method)
+-create table email(fields: is, email, created at) in DB
+-create form with action and name
+-collect data inserted in form with method POST
+-connect to DB
+-execute query insert in the table email of class DPO , inserting the data collected with method POST
+-to connect to mailchimp use file mailchimp.php 
+    which code is available in AreaPrivataNome signup/registrazione/mailchimp.php
+NB! in file mailchimp we inserted list_id(audience) and id utente api_key of mailchimp
+
+--------Procedure in WP----------------
+-create plugin (folder wp-content/plugin create folder 'form')
+    plugin (folder 'form') contains:
+     --main file form.php(=name of the folder)
+     --comment (like in theme) that describes plugin
+-create table wp_email(fields: is, email, created at) in DB
+-create form with action and name 
+    which we visualize with shortcode to be inserted in footer.php (to be dynamic)
+-collect data inserted in form with method POST
+-connect to DB-no need-->in WP is already connected(in file wp-config)
+
+-to insert data in db don't use class DPO , but execute query wpdb 
+    which is predefined to communicate with Wordpress DP
+    https://codex.wordpress.org/it:Riferimento_classi/wpdb
+
+    example 
+    $wpdb->insert( 
+	'tabella', 
+	array( 
+		'colonna1' => 'valore1', 
+		'colonna2' => 123 
+	), 
+	array( 
+		'%s', 
+		'%d' 
+	) 
+    );  
+-to connect to mailchimp use file mailchimp.php 
+    which code is available in AreaPrivataNome signup/registrazione/mailchimp.php
+-sessions in wp are = to php
+NB! in file mailchimp we inserted list_id(audience) and id utente api_key of mailchimp
+
+
