@@ -14,7 +14,7 @@
 8 create header.php and cut-paste part if index with header into header
     before </head> put  <?php wp_head()?>
 9 create footer.php and cut-paste part if index with footer into header
-    after </body> <?php wp_head()?>
+    after </body> <?php wp_footer()?>
 10 in index.php
     -in the beginning before content <?php get_header()?>
     -in the end after content <?php get_footer()?>

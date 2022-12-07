@@ -24,7 +24,21 @@ NB! in file mailchimp we inserted list_id(audience) and id utente api_key of mai
 -create form with action and name 
     which we visualize with shortcode to be inserted in footer.php (to be dynamic)
 -collect data inserted in form with method POST
+    if ($_POST){
+        $email=$_POST['email'];
+    
+    }
 -connect to DB-no need-->in WP is already connected(in file wp-config)
+        if ($_POST){
+    $email=$_POST['email'];
+    global $wpdb;
+    //$table_name='wp_email';
+    $table_name=$wpdb->prefix.'email';
+    $date=date('Y-m-d H:i:s');
+    //insert in DB using wp function wpdb, preparing query in wp-myadmin db
+    $wpdb->query("INSERT INTO {$table_name}( `email`, `inserito`) VALUES ('$email','$date')");
+
+}
 
 -to insert data in db don't use class DPO , but execute query wpdb 
     which is predefined to communicate with Wordpress DP
