@@ -1,4 +1,4 @@
-
+<?php session_start();?>
     <?php get_header()?>
     <!-- Spinner Start -->
 <!--     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -7,8 +7,19 @@
         </div>
     </div> -->
     <!-- Spinner End -->
-
+   
     <?php get_template_part( 'includes/menu' ); ?>
+    <?php  if (isset($_SESSION['messaggio'])){?>
+                            <div class="alert alert-warning" role="alert">
+                            <?php 
+                            
+                            echo $_SESSION['messaggio'];
+                            unset($_SESSION['messaggio']);
+                            //session_destroy();
+                            //session_unset();
+                            ?>
+                            </div>
+                            <?php } ?>
     <?php get_template_part( 'includes/slider' ); ?>
 
     <!-- Service Start -->

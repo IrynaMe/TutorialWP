@@ -52,6 +52,8 @@
                     <!-- start shortcode -->
                             <?php echo do_shortcode( "[email]" ); ?>
 
+
+
                      <!-- end shortcode -->
                    <!--  <div class="position-relative mx-auto" style="max-width: 400px;">
                         <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">

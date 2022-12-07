@@ -7,8 +7,8 @@
 function form(){
 //form content see in themes/Tutorial/creaForm.php
 $form="<div class='position-relative mx-auto' style='max-width: 400px;'>";
-$form.="<form action='#' method='post'>";
-$form.="<input class='form-control border-0 w-100 py-3 ps-4 pe-5' type='text' placeholder='Your email' name='email'>";
+$form.="<form action='http://localhost:8888/TutorialWP/' method='post'>";
+$form.="<input class='form-control border-0 w-100 py-3 ps-4 pe-5' type='text' placeholder='Your email' name='e_mail'>";
 $form.= "<button type='submit' class='btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2' name='invio'>SignUp</button>";
 $form.="</form>";
 $form.="</div>";

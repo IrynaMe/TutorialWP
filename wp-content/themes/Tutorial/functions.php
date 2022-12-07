@@ -154,6 +154,4 @@ function Customizza_logo($wp_customize)
 }
 add_action('customize_register', 'Customizza_logo');
 
-
-
 ?>
